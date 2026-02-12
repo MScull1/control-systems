@@ -1,6 +1,8 @@
 import numpy as np
 import control as ct
 import matplotlib.pyplot as plt
+from scipy.integrate import solve_ivp
+import math
 
 # ==========================================
 # 1. Define Parameters
@@ -33,7 +35,7 @@ def create_system(C_val):
     # return ct.ss(A, B, C_mat, D)
 
     A = [[-(R1+R2+R3)/L1, R2/L1, 0], [R2/L2, -R2/L2, -1/L2], [0, 1/C_val, 0]]
-    B = [[1/L1]]
+    B = [[1/L1], [0], [0]]
     C = [[1, 0, 0]]
     D = [[0]]
     return ct.ss(A, B, C, D)
@@ -54,7 +56,7 @@ def create_system(C_val):
 # ==========================================
 # Define simulation time vector
 # Adjust the end time (0.001) based on your system's time constants
-t = np.linspace(0, 0.001, 1000) 
+t = np.linspace(0, 0.0002, 1000) 
 
 # Input 1: Step function (epsilon(t))
 u1 = np.ones_like(t)
